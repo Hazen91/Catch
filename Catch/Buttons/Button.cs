@@ -8,28 +8,25 @@ using System.Text;
 
 namespace Catch.Buttons
 {
-    class Button
+    abstract class Button
     {
         public Texture2D texture;
         public Rectangle hitbox;
-        Vector2 position;
+        public Vector2 position;
 
-        public Button(ContentManager content)
+        public Button(ContentManager content, Texture2D texture, Vector2 position)
         {
-            texture = content.Load<Texture2D>("startButton.png");
-            position = new Vector2(0, 0);
-            hitbox = new Rectangle(0,0,texture.Width,texture.Height);
-        }
-
-        public void click()
-        {
-            Game1.CurrentState = Game1.gameState.playing;
+            this.texture = texture;
+            this.position = position;
+            hitbox = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
         }
 
         public void draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
         }
+
+        public abstract void click();
 
     }
 }

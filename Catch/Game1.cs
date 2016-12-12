@@ -21,13 +21,19 @@ namespace Catch
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Button startButton;
+        StartButton startButton;
+        ExitButton exitButton;
         MouseState mouseState = Mouse.GetState();
         MouseState oldMouseState = Mouse.GetState();
+        KeyboardState keyboardState = Keyboard.GetState();
+        KeyboardState oldKeyboardState = Keyboard.GetState();
 
         FallerManager fallerManager;
         Catcher catcher;
         Texture2D catcherTexture;
+
+        Texture2D startButtonTexture;
+        Texture2D exitButtonTexture;
 
         private static gameState currentState = gameState.mainMenu;
 
@@ -44,7 +50,7 @@ namespace Catch
             }
         }
 
-        public void Quit()
+        public void quit()
         {
             this.Exit();
         }
@@ -70,10 +76,13 @@ namespace Catch
             graphics.SynchronizeWithVerticalRetrace = false;
             graphics.ApplyChanges();
 
-            startButton = new Button(Content);
-
             catcherTexture = this.Content.Load<Texture2D>("Bucket.png");
             catcher = new Catcher(catcherTexture);
+
+            startButtonTexture = this.Content.Load<Texture2D>("startButton.png");
+            exitButtonTexture = this.Content.Load<Texture2D>("quitButton.png");
+            startButton = new StartButton(Content, startButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 50));
+            exitButton = new ExitButton(Content, exitButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 250));
 
             fallerManager = new FallerManager(this.Content);
 
@@ -118,13 +127,20 @@ namespace Catch
             {
                 case gameState.mainMenu:
                     this.IsMouseVisible = true;
+
                     mouseState = Mouse.GetState();
+                    
                     if (mouseState.LeftButton == ButtonState.Pressed && startButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
                     {
                         startButton.click();
                     }
-                    oldMouseState = mouseState;
+                    if (mouseState.LeftButton == ButtonState.Pressed && exitButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
+                    {
+                        exitButton.click(this);
+                    }
 
+                    oldMouseState = mouseState;
+                    
                     break;
 
                 case gameState.playing:
@@ -141,9 +157,29 @@ namespace Catch
                             Debug.WriteLine(score);
                         }
                     }
+
+                    keyboardState = Keyboard.GetState();
+                    if (oldKeyboardState.IsKeyUp(Keys.P) && keyboardState.IsKeyDown(Keys.P))
+                    {
+                        if (CurrentState == gameState.playing)
+                        {
+                            currentState = gameState.paused;
+                        }
+                        
+                    }
+                    oldKeyboardState = keyboardState;
                     break;
 
                 case gameState.paused:
+                    keyboardState = Keyboard.GetState();
+                    if (oldKeyboardState.IsKeyUp(Keys.P) && keyboardState.IsKeyDown(Keys.P))
+                    {
+                        if (CurrentState == gameState.paused)
+                        {
+                            currentState = gameState.playing;
+                        }
+                    }
+                    oldKeyboardState = keyboardState;
                     break;
             }
 
@@ -161,10 +197,12 @@ namespace Catch
 
             switch (CurrentState)
             {
+                
                 case gameState.mainMenu:
                     this.IsMouseVisible = true;
                     spriteBatch.Begin();
                     startButton.draw(spriteBatch);
+                    exitButton.draw(spriteBatch);
                     spriteBatch.End();
                     break;
 
@@ -176,8 +214,6 @@ namespace Catch
                     spriteBatch.End();
                     break;
 
-                case gameState.paused:
-                    break;
             }
 
             

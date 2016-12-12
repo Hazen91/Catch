@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Buttons\Button.cs" />
+    <Compile Include="Buttons\ExitButton.cs" />
+    <Compile Include="Buttons\StartButton.cs" />
     <Compile Include="Catcher.cs" />
     <Compile Include="Faller.cs" />
     <Compile Include="FallerManager.cs" />
