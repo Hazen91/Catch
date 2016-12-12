@@ -33,7 +33,7 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 fallerList.Add(new Faller(fallerTexture));
-                //fallerList.Add(new Faller(fallerTexture));
+                
                 remainingDelay = delay;
             }
 

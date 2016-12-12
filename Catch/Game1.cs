@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Catch.Buttons;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
@@ -13,14 +14,40 @@ namespace Catch
         public static int windowWidth = 1280;
         public static int windowHeight = 720;
 
+        public enum gameState { mainMenu, paused, playing };
+
         int score = 0;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Button startButton;
+        MouseState mouseState = Mouse.GetState();
+        MouseState oldMouseState = Mouse.GetState();
+
         FallerManager fallerManager;
         Catcher catcher;
         Texture2D catcherTexture;
 
+        private static gameState currentState = gameState.mainMenu;
+
+        public static gameState CurrentState
+        {
+            get
+            {
+                return currentState;
+            }
+
+            set
+            {
+                currentState = value;
+            }
+        }
+
+        public void Quit()
+        {
+            this.Exit();
+        }
 
         public Game1()
         {
@@ -37,10 +64,13 @@ namespace Catch
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = windowWidth;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = windowHeight;   // set this value to the desired height of your window
             graphics.SynchronizeWithVerticalRetrace = false;
             graphics.ApplyChanges();
+
+            startButton = new Button(Content);
 
             catcherTexture = this.Content.Load<Texture2D>("Bucket.png");
             catcher = new Catcher(catcherTexture);
@@ -82,18 +112,41 @@ namespace Catch
                 Exit();
 
             // TODO: Add your update logic here
-            catcher.update();
-            fallerManager.update(gameTime);
+            
 
-            for (int i = fallerManager.fallerList.Count - 1; i >= 0; i--)
+            switch (CurrentState)
             {
-                if (catcher.hitbox.Intersects(fallerManager.fallerList[i].hitbox))
-                {
-                    fallerManager.fallerList.RemoveAt(i);
-                    score += 10;
-                    Debug.WriteLine(score);
-                }
+                case gameState.mainMenu:
+                    this.IsMouseVisible = true;
+                    mouseState = Mouse.GetState();
+                    if (mouseState.LeftButton == ButtonState.Pressed && startButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
+                    {
+                        startButton.click();
+                    }
+                    oldMouseState = mouseState;
+
+                    break;
+
+                case gameState.playing:
+                    this.IsMouseVisible = false;
+                    catcher.update();
+                    fallerManager.update(gameTime);
+
+                    for (int i = fallerManager.fallerList.Count - 1; i >= 0; i--)
+                    {
+                        if (catcher.hitbox.Intersects(fallerManager.fallerList[i].hitbox))
+                        {
+                            fallerManager.fallerList.RemoveAt(i);
+                            score += 10;
+                            Debug.WriteLine(score);
+                        }
+                    }
+                    break;
+
+                case gameState.paused:
+                    break;
             }
+
 
             base.Update(gameTime);
         }
@@ -106,11 +159,28 @@ namespace Catch
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            catcher.draw(spriteBatch);
-            fallerManager.draw(spriteBatch);
-            spriteBatch.End();
+            switch (CurrentState)
+            {
+                case gameState.mainMenu:
+                    this.IsMouseVisible = true;
+                    spriteBatch.Begin();
+                    startButton.draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+
+                case gameState.playing:
+                    this.IsMouseVisible = false;
+                    spriteBatch.Begin();
+                    catcher.draw(spriteBatch);
+                    fallerManager.draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+
+                case gameState.paused:
+                    break;
+            }
+
+            
 
             base.Draw(gameTime);
         }
