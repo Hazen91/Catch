@@ -85,11 +85,11 @@ namespace Catch
             catcher.update();
             fallerManager.update(gameTime);
 
-            foreach (Faller faller in fallerManager.fallerList)
+            for (int i = fallerManager.fallerList.Count - 1; i >= 0; i--)
             {
-                if (catcher.hitbox.Intersects(faller.hitbox))
+                if (catcher.hitbox.Intersects(fallerManager.fallerList[i].hitbox))
                 {
-                    fallerManager.fallerList.Remove(faller);
+                    fallerManager.fallerList.RemoveAt(i);
                     score += 10;
                     Debug.WriteLine(score);
                 }

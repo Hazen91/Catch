@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,7 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 fallerList.Add(new Faller(fallerTexture));
+                //fallerList.Add(new Faller(fallerTexture));
                 remainingDelay = delay;
             }
 
