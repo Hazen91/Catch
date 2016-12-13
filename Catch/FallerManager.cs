@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Catch.Fallers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,13 +16,16 @@ namespace Catch
         public List<Faller> fallerList;
         private const float delay = 3;
         private float remainingDelay = delay;
-        Texture2D fallerTexture;
+        Texture2D starTexture;
+        Texture2D speedPowerUpTexture;
+        Random random;
 
         public FallerManager(ContentManager content)
         {
             this.content = content;
             fallerList = new List<Faller>();
-            fallerTexture = content.Load<Texture2D>("star.png");
+            starTexture = content.Load<Texture2D>("star.png");
+            speedPowerUpTexture = content.Load<Texture2D>("SpeedPowerUp.png");
         }
 
         public void update(GameTime gameTime)
@@ -32,7 +36,12 @@ namespace Catch
 
             if (remainingDelay <= 0)
             {
-                fallerList.Add(new Faller(fallerTexture));
+                random = new Random();
+                int decider = random.Next(1,5);
+                if (decider != 1)
+                { fallerList.Add(new Star(starTexture)); }
+                else
+                { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
                 remainingDelay = delay;
             }
 

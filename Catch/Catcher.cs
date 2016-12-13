@@ -14,7 +14,19 @@ namespace Catch
         Texture2D texture;
         public Rectangle hitbox;
         private float velocity = 400;
-        
+
+        public float Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+
+            set
+            {
+                velocity = value;
+            }
+        }
 
         public Catcher(Texture2D texture)
         {

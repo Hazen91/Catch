@@ -16,8 +16,6 @@ namespace Catch
 
         public enum gameState { mainMenu, paused, playing, gameOver };
 
-        
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -187,6 +185,11 @@ namespace Catch
                     {
                         if (catcher.hitbox.Intersects(fallerManager.fallerList[i].hitbox))
                         {
+                            if (fallerManager.fallerList[i].GetType() == typeof(Fallers.SpeedPowerUp))
+                            {
+                                catcher.Velocity += 100;
+                            }
+                            Debug.WriteLine(fallerManager.fallerList[i].GetType());
                             fallerManager.fallerList.RemoveAt(i);
                             Score += 10;
                         }

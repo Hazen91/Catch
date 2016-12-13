@@ -57,7 +57,9 @@
     <Compile Include="Buttons\ExitButton.cs" />
     <Compile Include="Buttons\StartButton.cs" />
     <Compile Include="Catcher.cs" />
-    <Compile Include="Faller.cs" />
+    <Compile Include="Fallers\Faller.cs" />
+    <Compile Include="Fallers\SpeedPowerUp.cs" />
+    <Compile Include="Fallers\Star.cs" />
     <Compile Include="FallerManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
@@ -75,6 +77,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\quitButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SpeedPowerUp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\star.png">

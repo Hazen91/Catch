@@ -2,13 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Catch
+namespace Catch.Fallers
 {
-    class Faller
+    abstract class Faller
     {
         Texture2D texture;
         Vector2 position;
@@ -21,16 +20,16 @@ namespace Catch
         {
             random = new Random();
             this.texture = texture;
-            position = new Vector2(random.Next(0, Game1.windowWidth-texture.Width+1), 0);
+            position = new Vector2(random.Next(0, Game1.windowWidth - texture.Width + 1), 0);
             hitbox = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
             random = new Random();
             speed = random.Next(100, 300);
             random = new Random();
             speedX = random.Next(-300, 301);
-            Debug.WriteLine(speed);
+            
         }
 
-        public void update(GameTime gameTime)
+        public virtual void update(GameTime gameTime)
         {
             position.Y += speed * (float) gameTime.ElapsedGameTime.TotalSeconds;
             position.X += speedX * (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -49,5 +48,6 @@ namespace Catch
         {
             spriteBatch.Draw(texture, position, Color.White);
         }
+        
     }
 }
