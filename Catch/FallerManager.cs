@@ -33,13 +33,12 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 fallerList.Add(new Faller(fallerTexture));
-                
                 remainingDelay = delay;
             }
 
             foreach (Faller faller in fallerList)
             {
-                faller.update();
+                faller.update(gameTime);
             }
         }
 

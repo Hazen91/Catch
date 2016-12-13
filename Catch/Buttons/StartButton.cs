@@ -30,6 +30,8 @@ namespace Catch.Buttons
         public override void click()
         {
             Game1.CurrentState = Game1.gameState.playing;
+            Game1.Score = 0;
+            Game1.Lifes = 3;
         }
 
     }

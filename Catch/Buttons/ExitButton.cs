@@ -19,7 +19,7 @@ namespace Catch.Buttons
 
         public override void click()
         {
-            click();
+            throw new NotImplementedException();
         }
 
         public void click(Game1 game1)

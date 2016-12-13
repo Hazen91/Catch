@@ -14,9 +14,9 @@ namespace Catch
         public static int windowWidth = 1280;
         public static int windowHeight = 720;
 
-        public enum gameState { mainMenu, paused, playing };
+        public enum gameState { mainMenu, paused, playing, gameOver };
 
-        int score = 0;
+        
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -27,6 +27,8 @@ namespace Catch
         MouseState oldMouseState = Mouse.GetState();
         KeyboardState keyboardState = Keyboard.GetState();
         KeyboardState oldKeyboardState = Keyboard.GetState();
+
+        private SpriteFont font;
 
         FallerManager fallerManager;
         Catcher catcher;
@@ -49,6 +51,37 @@ namespace Catch
                 currentState = value;
             }
         }
+
+        private static int lifes = 3;
+
+        public static int Lifes
+        {
+            get
+            {
+                return lifes;
+            }
+
+            set
+            {
+                lifes = value;
+            }
+        }
+
+        private static int score = 0;
+
+        public static int Score
+        {
+            get
+            {
+                return score;
+            }
+
+            set
+            {
+                score = value;
+            }
+        }
+
 
         public void quit()
         {
@@ -75,6 +108,8 @@ namespace Catch
             graphics.PreferredBackBufferHeight = windowHeight;   // set this value to the desired height of your window
             graphics.SynchronizeWithVerticalRetrace = false;
             graphics.ApplyChanges();
+
+            font = Content.Load<SpriteFont>("Arial");
 
             catcherTexture = this.Content.Load<Texture2D>("Bucket.png");
             catcher = new Catcher(catcherTexture);
@@ -145,7 +180,7 @@ namespace Catch
 
                 case gameState.playing:
                     this.IsMouseVisible = false;
-                    catcher.update();
+                    catcher.update(gameTime);
                     fallerManager.update(gameTime);
 
                     for (int i = fallerManager.fallerList.Count - 1; i >= 0; i--)
@@ -153,8 +188,16 @@ namespace Catch
                         if (catcher.hitbox.Intersects(fallerManager.fallerList[i].hitbox))
                         {
                             fallerManager.fallerList.RemoveAt(i);
-                            score += 10;
-                            Debug.WriteLine(score);
+                            Score += 10;
+                        }
+                        else if (fallerManager.fallerList[i].hitbox.Location.Y >= windowHeight)
+                        {
+                            fallerManager.fallerList.RemoveAt(i);
+                            Lifes -= 1;
+                            if (Lifes <= 0)
+                            {
+                                currentState = gameState.gameOver;
+                            }
                         }
                     }
 
@@ -180,6 +223,23 @@ namespace Catch
                         }
                     }
                     oldKeyboardState = keyboardState;
+                    break;
+
+                case gameState.gameOver:
+                    this.IsMouseVisible = true;
+
+                    mouseState = Mouse.GetState();
+
+                    if (mouseState.LeftButton == ButtonState.Pressed && startButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
+                    {
+                        startButton.click();
+                    }
+                    if (mouseState.LeftButton == ButtonState.Pressed && exitButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
+                    {
+                        exitButton.click(this);
+                    }
+
+                    oldMouseState = mouseState;
                     break;
             }
 
@@ -209,11 +269,22 @@ namespace Catch
                 case gameState.playing:
                     this.IsMouseVisible = false;
                     spriteBatch.Begin();
+                    spriteBatch.DrawString(font,"Score: "+Score, new Vector2(0, 0),Color.Black);
+                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(350, 0), Color.Black);
                     catcher.draw(spriteBatch);
                     fallerManager.draw(spriteBatch);
                     spriteBatch.End();
                     break;
 
+                case gameState.gameOver:
+                    this.IsMouseVisible = true;
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(font, "Game Over", new Vector2(350, 0), Color.Black);
+                    spriteBatch.DrawString(font, "Score: "+Score, new Vector2(450, 0), Color.Black);
+                    startButton.draw(spriteBatch);
+                    exitButton.draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
             }
 
             

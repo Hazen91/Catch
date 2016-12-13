@@ -13,6 +13,8 @@ namespace Catch
         Vector2 position;
         Texture2D texture;
         public Rectangle hitbox;
+        private float velocity = 350;
+        
 
         public Catcher(Texture2D texture)
         {
@@ -21,15 +23,19 @@ namespace Catch
             hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
         }
 
-        public void update()
+        public void update(GameTime gameTime)
         {
             KeyboardState keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.Left))
-                position.X -= 10;
+            {
+                position.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
 
             if (keyState.IsKeyDown(Keys.Right))
-                position.X += 10;
+            {
+                position.X += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+            }
 
             hitbox.Location = new Point((int) position.X, (int) position.Y);
         }
