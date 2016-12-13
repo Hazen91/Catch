@@ -14,8 +14,8 @@ namespace Catch
     {
         ContentManager content;
         public List<Faller> fallerList;
-        private const float delay = 3;
-        private float remainingDelay = delay;
+        private float delay = 1;
+        private float remainingDelay = 3;
         Texture2D starTexture;
         Texture2D speedPowerUpTexture;
         Random random;
@@ -37,11 +37,13 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 random = new Random();
-                int decider = random.Next(1,5);
+                int decider = random.Next(1,11);
                 if (decider != 1)
                 { fallerList.Add(new Star(starTexture)); }
                 else
                 { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
+                random = new Random();
+                delay = random.Next(1,5);
                 remainingDelay = delay;
             }
 

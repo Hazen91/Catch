@@ -18,6 +18,11 @@ namespace Catch.Buttons
             hitbox = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
         }
 
+        public override void click()
+        {
+            throw new NotImplementedException();
+        }
+
         /*
         public StartButton(ContentManager content)
         {
@@ -27,11 +32,12 @@ namespace Catch.Buttons
         }
         */
 
-        public override void click()
+        public void click(FallerManager fallerManager)
         {
             Game1.CurrentState = Game1.gameState.playing;
             Game1.Score = 0;
             Game1.Lifes = 3;
+            fallerManager.fallerList.Clear();
         }
 
     }

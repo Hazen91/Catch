@@ -14,6 +14,7 @@ namespace Catch
         Texture2D texture;
         public Rectangle hitbox;
         private float velocity = 400;
+        private float maxVelocity = 800;
 
         public float Velocity
         {
@@ -39,12 +40,15 @@ namespace Catch
         {
             KeyboardState keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Left))
+            if (velocity >= maxVelocity)
+            { velocity = maxVelocity; }
+
+            if (keyState.IsKeyDown(Keys.Left) && position.X > 0)
             {
                 position.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (keyState.IsKeyDown(Keys.Right))
+            if (keyState.IsKeyDown(Keys.Right) && position.X <= Game1.windowWidth - texture.Width)
             {
                 position.X += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
             }

@@ -76,6 +76,9 @@
     <Content Include="Content\Bucket.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\hubblebackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\quitButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

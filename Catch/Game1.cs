@@ -32,6 +32,7 @@ namespace Catch
         Catcher catcher;
         Texture2D catcherTexture;
 
+        Texture2D backgroundImage;
         Texture2D startButtonTexture;
         Texture2D exitButtonTexture;
 
@@ -80,7 +81,6 @@ namespace Catch
             }
         }
 
-
         public void quit()
         {
             this.Exit();
@@ -108,6 +108,8 @@ namespace Catch
             graphics.ApplyChanges();
 
             font = Content.Load<SpriteFont>("Arial");
+
+            backgroundImage = this.Content.Load<Texture2D>("hubblebackground.png");
 
             catcherTexture = this.Content.Load<Texture2D>("Bucket.png");
             catcher = new Catcher(catcherTexture);
@@ -165,7 +167,7 @@ namespace Catch
                     
                     if (mouseState.LeftButton == ButtonState.Pressed && startButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
                     {
-                        startButton.click();
+                        startButton.click(fallerManager);
                     }
                     if (mouseState.LeftButton == ButtonState.Pressed && exitButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
                     {
@@ -235,7 +237,7 @@ namespace Catch
 
                     if (mouseState.LeftButton == ButtonState.Pressed && startButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
                     {
-                        startButton.click();
+                        startButton.click(fallerManager);
                     }
                     if (mouseState.LeftButton == ButtonState.Pressed && exitButton.hitbox.Contains(mouseState.X, mouseState.Y) && oldMouseState.LeftButton == ButtonState.Released)
                     {
@@ -272,8 +274,9 @@ namespace Catch
                 case gameState.playing:
                     this.IsMouseVisible = false;
                     spriteBatch.Begin();
-                    spriteBatch.DrawString(font,"Score: "+Score, new Vector2(0, 0),Color.Black);
-                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(350, 0), Color.Black);
+                    spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(font,"Score: "+Score, new Vector2(0, 0),Color.White);
+                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(350, 0), Color.White);
                     catcher.draw(spriteBatch);
                     fallerManager.draw(spriteBatch);
                     spriteBatch.End();

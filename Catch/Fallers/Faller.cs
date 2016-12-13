@@ -13,7 +13,7 @@ namespace Catch.Fallers
         Vector2 position;
         public Rectangle hitbox;
         Random random;
-        private float speed;
+        private float speedY;
         private float speedX;
 
         public Faller(Texture2D texture)
@@ -23,7 +23,7 @@ namespace Catch.Fallers
             position = new Vector2(random.Next(0, Game1.windowWidth - texture.Width + 1), 0);
             hitbox = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
             random = new Random();
-            speed = random.Next(100, 300);
+            speedY = random.Next(100, 300);
             random = new Random();
             speedX = random.Next(-300, 301);
             
@@ -31,7 +31,7 @@ namespace Catch.Fallers
 
         public virtual void update(GameTime gameTime)
         {
-            position.Y += speed * (float) gameTime.ElapsedGameTime.TotalSeconds;
+            position.Y += speedY * (float) gameTime.ElapsedGameTime.TotalSeconds;
             position.X += speedX * (float) gameTime.ElapsedGameTime.TotalSeconds;
             hitbox.Location = new Point((int) position.X, (int) position.Y);
             if (position.X <= 0)
