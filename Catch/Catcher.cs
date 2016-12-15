@@ -33,7 +33,7 @@ namespace Catch
         {
             this.texture = texture;
             position = new Vector2(0, Game1.windowHeight-texture.Height);
-            hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height/3);
+            hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
         }
 
         public void update(GameTime gameTime)
