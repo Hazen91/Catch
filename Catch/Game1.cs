@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Diagnostics;
 
 namespace Catch
@@ -152,11 +153,9 @@ namespace Catch
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            { Exit(); }
 
-            // TODO: Add your update logic here
-            
 
             switch (CurrentState)
             {
@@ -193,7 +192,9 @@ namespace Catch
                             }
                             else
                             {
-                                Score += 10;
+                                int pointstoadd = (int) ( ((fallerManager.fallerList[i].Velocity.Y/8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10))/ 5 );
+                                Debug.WriteLine(pointstoadd);
+                                Score += pointstoadd ;
                             }
                             Debug.WriteLine(fallerManager.fallerList[i].GetType());
                             fallerManager.fallerList.RemoveAt(i);

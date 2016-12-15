@@ -40,7 +40,7 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 random = new Random();
-                int decider = random.Next(1,11);
+                int decider = random.Next(1,8);
                 if (decider != 1)
                 {
                     fallerList.Add(new Star(starTexture, cometTexture));
@@ -48,7 +48,7 @@ namespace Catch
                 else
                 { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
                 random = new Random();
-                delay = random.Next(1,5);
+                delay = random.Next(1,4);
                 remainingDelay = delay;
             }
 

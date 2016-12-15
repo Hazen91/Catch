@@ -13,7 +13,7 @@ namespace Catch
         Vector2 position;
         Texture2D texture;
         public Rectangle hitbox;
-        private float velocity = 500;
+        private float velocity = 600;
         private float maxVelocity = 1200;
 
         public float Velocity

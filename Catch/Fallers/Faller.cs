@@ -81,23 +81,17 @@ namespace Catch.Fallers
 
         public virtual void update(GameTime gameTime)
         {
-            // position.Y += speedY * (float) gameTime.ElapsedGameTime.TotalSeconds;
-            // position.X += speedX * (float) gameTime.ElapsedGameTime.TotalSeconds;
+            
             position += direction * velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
             direction.Normalize();
             hitbox.Location = new Point((int) position.X, (int) position.Y);
-            if (position.X <= 0)
+            if (position.X <= 0 || position.X >= Game1.windowWidth - texture.Width)
             {
                 velocity.X *= -1;
                 
             }
-            if (position.X >= Game1.windowWidth - texture.Width)
-            {
-                velocity.X *= -1;
-                
-            }
-
-            Debug.WriteLine("X: "+position.X +" // Y: "+ position.Y);
+            
+           
         }
 
         private float randomFloat(float min, float max, int floatingPoints)
