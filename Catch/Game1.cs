@@ -1,5 +1,6 @@
 ﻿using Catch.Buttons;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -36,6 +37,9 @@ namespace Catch
         Texture2D backgroundImage;
         Texture2D startButtonTexture;
         Texture2D exitButtonTexture;
+
+        SoundEffect fireball;
+        SoundEffectInstance soundEffectInstance;
 
         private static gameState currentState = gameState.mainMenu;
 
@@ -120,6 +124,10 @@ namespace Catch
             startButton = new StartButton(Content, startButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 50));
             exitButton = new ExitButton(Content, exitButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 250));
 
+            fireball = Content.Load<SoundEffect>("Fireball");
+            soundEffectInstance = fireball.CreateInstance();
+            soundEffectInstance.Volume = 0.2f;
+
             fallerManager = new FallerManager(this.Content);
 
             base.Initialize();
@@ -192,9 +200,10 @@ namespace Catch
                             }
                             else
                             {
-                                int pointstoadd = (int) ( ((fallerManager.fallerList[i].Velocity.Y/8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10))/ 5 );
-                                Debug.WriteLine(pointstoadd);
-                                Score += pointstoadd ;
+                                soundEffectInstance.Play();
+                                //int pointstoadd = (int) ( ((fallerManager.fallerList[i].Velocity.Y/8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10))/ 5 );
+                                //Debug.WriteLine(pointstoadd);
+                                Score += (int) (((fallerManager.fallerList[i].Velocity.Y / 8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10)) / 5);
                             }
                             Debug.WriteLine(fallerManager.fallerList[i].GetType());
                             fallerManager.fallerList.RemoveAt(i);

@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Fireball.wav" />
     <Content Include="Content\starHitbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

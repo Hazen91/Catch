@@ -19,3 +19,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Arial.spritefont
 
+#begin Fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Fireball.wav
+
