@@ -19,14 +19,16 @@ namespace Catch
         private float remainingDelay = 3;
         Texture2D starTexture;
         Texture2D speedPowerUpTexture;
+        Texture2D cometTexture;
         static Random random;
 
         public FallerManager(ContentManager content)
         {
             this.content = content;
             fallerList = new List<Faller>();
-            starTexture = content.Load<Texture2D>("star.png");
+            starTexture = content.Load<Texture2D>("starHitbox.png");
             speedPowerUpTexture = content.Load<Texture2D>("SpeedPowerUp.png");
+            cometTexture = content.Load<Texture2D>("star.png");
         }
 
         public void update(GameTime gameTime)
@@ -41,7 +43,7 @@ namespace Catch
                 int decider = random.Next(1,11);
                 if (decider != 1)
                 {
-                    fallerList.Add(new Star(starTexture));
+                    fallerList.Add(new Star(starTexture, cometTexture));
                 }
                 else
                 { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }

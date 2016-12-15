@@ -111,7 +111,7 @@ namespace Catch
 
             backgroundImage = this.Content.Load<Texture2D>("hubblebackground.png");
 
-            catcherTexture = this.Content.Load<Texture2D>("Bucket.png");
+            catcherTexture = this.Content.Load<Texture2D>("Ship.png");
             catcher = new Catcher(catcherTexture);
 
             startButtonTexture = this.Content.Load<Texture2D>("startButton.png");

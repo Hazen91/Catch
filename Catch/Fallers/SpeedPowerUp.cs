@@ -14,6 +14,7 @@ namespace Catch.Fallers
             
         }
 
+
         public override void draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, null, Color.White, VectorToAngle(Velocity * Direction), new Vector2(Texture.Width, Texture.Height), 1f, SpriteEffects.None, 1);

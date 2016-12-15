@@ -11,8 +11,17 @@ namespace Catch
 {
     class Star : Faller
     {
-        public Star(Texture2D texture) : base(texture)
-        { 
+        Texture2D comet;
+        public Star(Texture2D texture, Texture2D comet) : base(texture)
+        {
+            this.comet = comet;
+        }
+
+        public override void draw(SpriteBatch spriteBatch)
+        {
+            base.draw(spriteBatch);
+            spriteBatch.Draw(comet, Position, null, Color.White*0.8f, VectorToAngle(Velocity * Direction), new Vector2(Texture.Width, Texture.Height), 1f, SpriteEffects.FlipVertically, 1);
+            //spriteBatch.Draw(texture, position, Color.White);
         }
     }
 }
