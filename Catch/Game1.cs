@@ -37,6 +37,7 @@ namespace Catch
         Texture2D backgroundImage;
         Texture2D startButtonTexture;
         Texture2D exitButtonTexture;
+       
 
         SoundEffect fireball;
         SoundEffectInstance soundEffectInstance;
@@ -124,6 +125,7 @@ namespace Catch
             startButton = new StartButton(Content, startButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 50));
             exitButton = new ExitButton(Content, exitButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 250));
 
+
             fireball = Content.Load<SoundEffect>("Fireball");
             soundEffectInstance = fireball.CreateInstance();
             soundEffectInstance.Volume = 0.2f;
@@ -201,11 +203,9 @@ namespace Catch
                             else
                             {
                                 soundEffectInstance.Play();
-                                //int pointstoadd = (int) ( ((fallerManager.fallerList[i].Velocity.Y/8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10))/ 5 );
-                                //Debug.WriteLine(pointstoadd);
                                 Score += (int) (((fallerManager.fallerList[i].Velocity.Y / 8) + (Math.Abs(fallerManager.fallerList[i].Velocity.X) / 10)) / 5);
                             }
-                            Debug.WriteLine(fallerManager.fallerList[i].GetType());
+
                             fallerManager.fallerList.RemoveAt(i);
                             
                         }
@@ -289,10 +289,11 @@ namespace Catch
                     this.IsMouseVisible = false;
                     spriteBatch.Begin();
                     spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(font,"Score: "+Score, new Vector2(0, 0),Color.White);
-                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(350, 0), Color.White);
                     catcher.draw(spriteBatch);
                     fallerManager.draw(spriteBatch);
+                   
+                    spriteBatch.DrawString(font,"Score: "+Score, new Vector2(20, 8),Color.White);
+                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(200, 8), Color.White);
                     spriteBatch.End();
                     break;
 
