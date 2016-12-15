@@ -211,8 +211,11 @@ namespace Catch
                         }
                         else if (fallerManager.fallerList[i].hitbox.Location.Y >= windowHeight)
                         {
+                            if (fallerManager.fallerList[i].GetType() == typeof(Fallers.Star))
+                            { Lifes -= 1; }
+
                             fallerManager.fallerList.RemoveAt(i);
-                            Lifes -= 1;
+                            
                             if (Lifes <= 0)
                             {
                                 currentState = gameState.gameOver;

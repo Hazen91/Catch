@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Catch
+namespace Catch.Fallers
 {
     class Star : Faller
     {
