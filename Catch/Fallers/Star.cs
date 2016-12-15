@@ -12,7 +12,7 @@ namespace Catch
     class Star : Faller
     {
         public Star(Texture2D texture) : base(texture)
-        {
+        { 
         }
     }
 }

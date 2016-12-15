@@ -191,9 +191,13 @@ namespace Catch
                             {
                                 catcher.Velocity += 100;
                             }
+                            else
+                            {
+                                Score += 10;
+                            }
                             Debug.WriteLine(fallerManager.fallerList[i].GetType());
                             fallerManager.fallerList.RemoveAt(i);
-                            Score += 10;
+                            
                         }
                         else if (fallerManager.fallerList[i].hitbox.Location.Y >= windowHeight)
                         {

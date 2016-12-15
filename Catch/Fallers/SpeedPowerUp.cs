@@ -14,9 +14,10 @@ namespace Catch.Fallers
             
         }
 
-        public override void update(GameTime gameTime)
+        public override void draw(SpriteBatch spriteBatch)
         {
-            base.update(gameTime);
+            spriteBatch.Draw(Texture, Position, null, Color.White, VectorToAngle(Velocity * Direction), new Vector2(Texture.Width, Texture.Height), 1f, SpriteEffects.None, 1);
+            //spriteBatch.Draw(texture, position, Color.White);
         }
     }
 }

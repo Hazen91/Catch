@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -18,7 +19,7 @@ namespace Catch
         private float remainingDelay = 3;
         Texture2D starTexture;
         Texture2D speedPowerUpTexture;
-        Random random;
+        static Random random;
 
         public FallerManager(ContentManager content)
         {
@@ -39,7 +40,9 @@ namespace Catch
                 random = new Random();
                 int decider = random.Next(1,11);
                 if (decider != 1)
-                { fallerList.Add(new Star(starTexture)); }
+                {
+                    fallerList.Add(new Star(starTexture));
+                }
                 else
                 { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
                 random = new Random();
