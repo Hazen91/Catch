@@ -37,7 +37,8 @@ namespace Catch
         Texture2D backgroundImage;
         Texture2D startButtonTexture;
         Texture2D exitButtonTexture;
-       
+        Texture2D speedBarTexture;
+        Bar speedBar;
 
         SoundEffect fireball;
         SoundEffectInstance soundEffectInstance;
@@ -124,7 +125,8 @@ namespace Catch
             exitButtonTexture = this.Content.Load<Texture2D>("quitButton.png");
             startButton = new StartButton(Content, startButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 50));
             exitButton = new ExitButton(Content, exitButtonTexture, new Vector2(windowWidth / 2 - startButtonTexture.Width / 2, 250));
-
+            speedBarTexture = Content.Load<Texture2D>("bars.png");
+            speedBar = new Bar(speedBarTexture);
 
             fireball = Content.Load<SoundEffect>("Fireball");
             soundEffectInstance = fireball.CreateInstance();
@@ -191,6 +193,7 @@ namespace Catch
                     this.IsMouseVisible = false;
                     catcher.update(gameTime);
                     fallerManager.update(gameTime);
+                    speedBar.Update((int) catcher.Velocity);
 
                     for (int i = fallerManager.fallerList.Count - 1; i >= 0; i--)
                     {
@@ -199,6 +202,7 @@ namespace Catch
                             if (fallerManager.fallerList[i].GetType() == typeof(Fallers.SpeedPowerUp))
                             {
                                 catcher.Velocity += 100;
+                                
                             }
                             else
                             {
@@ -294,9 +298,10 @@ namespace Catch
                     spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
                     catcher.draw(spriteBatch);
                     fallerManager.draw(spriteBatch);
-                   
+
                     spriteBatch.DrawString(font,"Score: "+Score, new Vector2(20, 8),Color.White);
-                    spriteBatch.DrawString(font, "Lifes: " + Lifes, new Vector2(200, 8), Color.White);
+                    spriteBatch.DrawString(font, "Lifes: " + Lifes+"          Speed:", new Vector2(150, 8), Color.White);
+                    speedBar.Draw(spriteBatch, new Vector2(300, 8));
                     spriteBatch.End();
                     break;
 

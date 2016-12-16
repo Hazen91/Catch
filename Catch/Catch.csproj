@@ -53,6 +53,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bar.cs" />
     <Compile Include="Buttons\Button.cs" />
     <Compile Include="Buttons\ExitButton.cs" />
     <Compile Include="Buttons\StartButton.cs" />
@@ -73,6 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bars.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Fireball.wav" />
     <Content Include="Content\starHitbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

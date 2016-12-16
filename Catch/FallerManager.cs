@@ -48,7 +48,7 @@ namespace Catch
                 else
                 { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
                 random = new Random();
-                delay = random.Next(1,4);
+                delay = randomFloat(1.5f,4f,1);
                 remainingDelay = delay;
             }
 
@@ -64,6 +64,12 @@ namespace Catch
             {
                 faller.draw(spriteBatch);
             }
+        }
+
+        private float randomFloat(float min, float max, int floatingPoints)
+        {
+            random = new Random();
+            return (float) Math.Round((random.NextDouble() * (max - min) + min), floatingPoints);
         }
     }
 }
