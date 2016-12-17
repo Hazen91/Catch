@@ -21,6 +21,7 @@ namespace Catch
         Texture2D speedPowerUpTexture;
         Texture2D cometTexture;
         static Random random;
+        private Texture2D speedPowerDownTexture;
 
         public FallerManager(ContentManager content)
         {
@@ -28,6 +29,7 @@ namespace Catch
             fallerList = new List<Faller>();
             starTexture = content.Load<Texture2D>("starHitbox.png");
             speedPowerUpTexture = content.Load<Texture2D>("SpeedPowerUp.png");
+            speedPowerDownTexture = content.Load<Texture2D>("SpeedPowerDown.png");
             cometTexture = content.Load<Texture2D>("star.png");
         }
 
@@ -40,13 +42,19 @@ namespace Catch
             if (remainingDelay <= 0)
             {
                 random = new Random();
-                int decider = random.Next(1,8);
-                if (decider != 1)
+                int decider = random.Next(1,13);
+                if (decider == 1)
+                {
+                    fallerList.Add(new SpeedPowerUp(speedPowerUpTexture));
+                }
+                else if (decider == 2)
+                {
+                    fallerList.Add(new SpeedPowerDown(speedPowerDownTexture));
+                }
+                else
                 {
                     fallerList.Add(new Star(starTexture, cometTexture));
                 }
-                else
-                { fallerList.Add(new SpeedPowerUp(speedPowerUpTexture)); }
                 random = new Random();
                 delay = randomFloat(1.5f,4f,1);
                 remainingDelay = delay;

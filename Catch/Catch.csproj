@@ -59,6 +59,7 @@
     <Compile Include="Buttons\StartButton.cs" />
     <Compile Include="Catcher.cs" />
     <Compile Include="Fallers\Faller.cs" />
+    <Compile Include="Fallers\SpeedPowerDown.cs" />
     <Compile Include="Fallers\SpeedPowerUp.cs" />
     <Compile Include="Fallers\Star.cs" />
     <Compile Include="FallerManager.cs" />
@@ -78,6 +79,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Fireball.wav" />
+    <Content Include="Content\SpeedPowerDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\starHitbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,7 @@ namespace Catch
         public Rectangle hitbox;
         private float velocity = 600;
         private float maxVelocity = 1200;
+        private float minVelocity = 200;
 
         public float Velocity
         {
@@ -42,6 +44,10 @@ namespace Catch
 
             if (velocity >= maxVelocity)
             { velocity = maxVelocity; }
+            if (velocity <= minVelocity)
+            { velocity = minVelocity; }
+
+            Debug.WriteLine(velocity);
 
             if (keyState.IsKeyDown(Keys.Left) && position.X > 0)
             {

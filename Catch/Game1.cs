@@ -204,6 +204,11 @@ namespace Catch
                                 catcher.Velocity += 100;
                                 
                             }
+                            else if (fallerManager.fallerList[i].GetType() == typeof(Fallers.SpeedPowerDown))
+                            {
+                                catcher.Velocity -= 100;
+
+                            }
                             else
                             {
                                 soundEffectInstance.Play();
